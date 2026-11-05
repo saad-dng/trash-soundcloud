@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { audioEngine } from '../../audio/AudioEngine';
-import { Crosshair, Lock, Unlock, Zap } from 'lucide-react';
+import { Crosshair, Lock, Unlock } from 'lucide-react';
 
 export const KaossPad: React.FC = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -8,9 +8,8 @@ export const KaossPad: React.FC = () => {
   const [isPressed, setIsPressed] = useState(false);
   const [isLocked, setIsLocked] = useState(false);
   const [coords, setCoords] = useState<{ x: number; y: number }>({ x: 0.5, y: 0.3 });
-  const ripplesRef = useRef<{ x: number; y: number; radius: number; alpha: number; color: string }[]>([]);
+  const ripplesRef = useRef<{ x: number; y: number; radius: number; alpha: number }[]>([]);
 
-  // Particle animation loop
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -22,13 +21,13 @@ export const KaossPad: React.FC = () => {
     const render = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Draw active crosshair indicator if pressed or locked
+      // Active crosshair
       if (isPressed || isLocked) {
         const px = coords.x * canvas.width;
         const py = (1 - coords.y) * canvas.height;
 
-        // Subtle guide lines
-        ctx.strokeStyle = 'rgba(0, 240, 255, 0.25)';
+        // Subtle guide lines in warm caramel
+        ctx.strokeStyle = 'rgba(217, 155, 97, 0.2)';
         ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.moveTo(px, 0);
@@ -37,26 +36,23 @@ export const KaossPad: React.FC = () => {
         ctx.lineTo(canvas.width, py);
         ctx.stroke();
 
-        // Central crosshair glowing reticle
+        // Central crosshair in warm caramel
         ctx.beginPath();
-        ctx.arc(px, py, 14, 0, Math.PI * 2);
-        ctx.strokeStyle = '#00f0ff';
+        ctx.arc(px, py, 12, 0, Math.PI * 2);
+        ctx.strokeStyle = '#d99b61';
         ctx.lineWidth = 2;
-        ctx.shadowBlur = 12;
-        ctx.shadowColor = '#00f0ff';
         ctx.stroke();
 
         ctx.beginPath();
-        ctx.arc(px, py, 4, 0, Math.PI * 2);
-        ctx.fillStyle = '#ffffff';
+        ctx.arc(px, py, 3.5, 0, Math.PI * 2);
+        ctx.fillStyle = '#f4ece4';
         ctx.fill();
-        ctx.shadowBlur = 0;
       }
 
-      // Render & update expanding ripple rings
+      // Render ripples in cream latte
       for (let i = ripplesRef.current.length - 1; i >= 0; i--) {
         const r = ripplesRef.current[i];
-        r.radius += 2.5;
+        r.radius += 2.0;
         r.alpha -= 0.025;
 
         if (r.alpha <= 0) {
@@ -66,8 +62,8 @@ export const KaossPad: React.FC = () => {
 
         ctx.beginPath();
         ctx.arc(r.x, r.y, r.radius, 0, Math.PI * 2);
-        ctx.strokeStyle = r.color.replace('ALPHA', r.alpha.toFixed(2));
-        ctx.lineWidth = 2;
+        ctx.strokeStyle = `rgba(232, 204, 167, ${r.alpha.toFixed(2)})`;
+        ctx.lineWidth = 1.5;
         ctx.stroke();
       }
 
@@ -82,7 +78,7 @@ export const KaossPad: React.FC = () => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
     const rawX = (clientX - rect.left) / rect.width;
-    const rawY = 1 - (clientY - rect.top) / rect.height; // invert Y so up is higher
+    const rawY = 1 - (clientY - rect.top) / rect.height;
 
     const x = Math.max(0, Math.min(1, rawX));
     const y = Math.max(0, Math.min(1, rawY));
@@ -90,15 +86,13 @@ export const KaossPad: React.FC = () => {
     setCoords({ x, y });
     audioEngine.setKaossControl(x, y);
 
-    // Spawn ripple particle
     const canvas = canvasRef.current;
     if (canvas) {
       ripplesRef.current.push({
         x: x * canvas.width,
         y: (1 - y) * canvas.height,
-        radius: 8,
-        alpha: 0.8,
-        color: 'rgba(0, 240, 255, ALPHA)',
+        radius: 6,
+        alpha: 0.7,
       });
     }
   };
@@ -123,13 +117,11 @@ export const KaossPad: React.FC = () => {
     }
 
     if (!isLocked) {
-      // Reset back to center neutral
       setCoords({ x: 0.5, y: 0.2 });
       audioEngine.setKaossControl(0.5, 0.2);
     }
   };
 
-  // Resize canvas to match container
   useEffect(() => {
     const canvas = canvasRef.current;
     const container = containerRef.current;
@@ -150,20 +142,20 @@ export const KaossPad: React.FC = () => {
   const fxDisplay = Math.round(coords.y * 100);
 
   return (
-    <div className="w-full bg-slate-950/80 rounded-2xl border border-slate-800/80 p-4 shadow-xl backdrop-blur-md flex flex-col">
+    <div className="w-full bg-[#1b1511] rounded-2xl border border-[#2e241d] p-4 shadow-sm flex flex-col">
       {/* Title & Status */}
-      <div className="flex items-center justify-between border-b border-slate-800 pb-2 mb-3">
+      <div className="flex items-center justify-between border-b border-[#2e241d] pb-2 mb-3">
         <div className="flex items-center gap-2">
-          <Crosshair className="w-4 h-4 text-cyan-400" />
-          <h2 className="text-sm font-mono font-bold tracking-wider text-slate-200 uppercase">
-            X/Y Kaoss Touchpad Controller
+          <Crosshair className="w-4 h-4 text-[#d99b61]" />
+          <h2 className="text-sm font-mono font-bold tracking-wider text-[#f4ece4] uppercase">
+            X/Y Touchpad Controller
           </h2>
         </div>
 
         <div className="flex items-center gap-3">
-          <span className="text-xs font-mono text-cyan-300">
-            CUTOFF: <strong className="text-white">{cutoffDisplay} Hz</strong> | RES/DELAY:{' '}
-            <strong className="text-white">{fxDisplay}%</strong>
+          <span className="text-xs font-mono text-[#a89988]">
+            CUTOFF: <strong className="text-[#e8cca7]">{cutoffDisplay} Hz</strong> | RES/ECHO:{' '}
+            <strong className="text-[#e8cca7]">{fxDisplay}%</strong>
           </span>
 
           <button
@@ -171,8 +163,8 @@ export const KaossPad: React.FC = () => {
             onClick={() => setIsLocked(!isLocked)}
             className={`flex items-center gap-1 px-2.5 py-1 text-xs font-mono font-bold rounded-lg border transition-colors ${
               isLocked
-                ? 'bg-cyan-500/20 text-cyan-300 border-cyan-400'
-                : 'bg-slate-800 text-slate-400 border-slate-700 hover:text-slate-200'
+                ? 'bg-[#d99b61] text-[#14100e] border-[#d99b61]'
+                : 'bg-[#241c16] text-[#a89988] border-[#382d24] hover:text-[#f4ece4]'
             }`}
             title="Lock current touch position on release"
           >
@@ -188,23 +180,22 @@ export const KaossPad: React.FC = () => {
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
-        className="relative flex-1 h-44 rounded-xl overflow-hidden cursor-crosshair border border-cyan-500/20 bg-slate-950/90 shadow-[inset_0_0_25px_rgba(0,0,0,0.8)] select-none"
+        className="relative flex-1 h-44 rounded-xl overflow-hidden cursor-crosshair border border-[#2e241d] bg-[#16110f] shadow-inner select-none"
       >
-        {/* Subtle Cyberpunk Neon Grid Background */}
-        <div className="absolute inset-0 pointer-events-none bg-[linear-gradient(to_right,rgba(0,240,255,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,240,255,0.06)_1px,transparent_1px)] bg-[size:32px_32px]" />
+        {/* Subtle Warm Grid Background */}
+        <div className="absolute inset-0 pointer-events-none bg-[linear-gradient(to_right,rgba(217,155,97,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(217,155,97,0.05)_1px,transparent_1px)] bg-[size:32px_32px]" />
 
-        {/* Canvas overlay for crosshairs and ripples */}
         <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none" />
 
         {/* Corner labels */}
-        <span className="absolute bottom-2 left-3 text-[10px] font-mono text-slate-400 pointer-events-none">
-          ◀ 60 Hz (LOW FILTER)
+        <span className="absolute bottom-2 left-3 text-[10px] font-mono text-[#6e5d50] pointer-events-none">
+          ◀ 60 Hz (WARM LOWS)
         </span>
-        <span className="absolute bottom-2 right-3 text-[10px] font-mono text-slate-400 pointer-events-none">
+        <span className="absolute bottom-2 right-3 text-[10px] font-mono text-[#6e5d50] pointer-events-none">
           16 kHz (OPEN FILTER) ▶
         </span>
-        <span className="absolute top-2 left-3 text-[10px] font-mono text-slate-400 pointer-events-none">
-          ▲ HIGH RES / ECHO SEND
+        <span className="absolute top-2 left-3 text-[10px] font-mono text-[#6e5d50] pointer-events-none">
+          ▲ HIGH ECHO & RESONANCE
         </span>
       </div>
     </div>

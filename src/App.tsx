@@ -13,7 +13,6 @@ import { SynthEditor } from './components/SynthEditor/SynthEditor';
 import { HelpModal } from './components/Modal/HelpModal';
 import { generateAlgorithmicTrack } from './utils/algorithmicComposer';
 import { audioCtxManager } from './audio/AudioContext';
-import { Activity, Cpu, Music2, Radio, Sparkles, Terminal } from 'lucide-react';
 
 export function App() {
   const [currentPreset, setCurrentPreset] = useState<Preset>(PRESETS[0]);
@@ -26,13 +25,13 @@ export function App() {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [currentStep, setCurrentStep] = useState<number>(0);
   const [helpOpen, setHelpOpen] = useState<boolean>(false);
-  const [announcement, setAnnouncement] = useState<string>('HYPERWAVE Studio Ready');
+  const [announcement, setAnnouncement] = useState<string>('Mocha Studio Ready');
 
   const [visualizerSettings, setVisualizerSettings] = useState<VisualizerSettings>({
-    mode: 'cyber_oscilloscope',
-    colorScheme: 'neon_cyan',
+    mode: 'warm_oscilloscope',
+    colorScheme: 'warm_caramel',
     sensitivity: 1.1,
-    bloom: true,
+    bloom: false,
     trail: true,
   });
 
@@ -107,7 +106,7 @@ export function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col selection:bg-cyan-500 selection:text-slate-950">
+    <div className="min-h-screen bg-[#14100e] text-[#ede0d4] flex flex-col selection:bg-[#d99b61] selection:text-[#14100e]">
       {/* Screen Reader Live Region for Announcements (Modern Web Accessibility) */}
       <div aria-live="polite" aria-atomic="true" className="visually-hidden">
         {announcement}
@@ -162,7 +161,7 @@ export function App() {
           </div>
         </div>
 
-        {/* Bottom Section: Synthesizer & Sound Design Editor */}
+        {/* Bottom Section: Synthesizer & Sound Design Architecture */}
         <section aria-label="Sound Design Architecture">
           <SynthEditor
             synthParams={synthParams}
@@ -176,32 +175,32 @@ export function App() {
       </main>
 
       {/* Modern Status Footer */}
-      <footer className="w-full bg-slate-950/90 border-t border-slate-900 py-3 px-4 text-xs font-mono text-slate-400 mt-6">
+      <footer className="w-full bg-[#181310] border-t border-[#2e241d] py-3 px-4 text-xs font-mono text-[#9e8c80] mt-6">
         <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-4">
-            <span className="flex items-center gap-1.5 text-cyan-400">
-              <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
+            <span className="flex items-center gap-1.5 text-[#d99b61]">
+              <span className="w-2 h-2 rounded-full bg-[#d99b61] animate-ping" />
               DSP ENGINE: 44.1kHz STEREO
             </span>
-            <span className="hidden sm:inline">|</span>
-            <span className="text-slate-400 hidden sm:inline">
+            <span className="hidden sm:inline text-[#3a2d24]">|</span>
+            <span className="text-[#9e8c80] hidden sm:inline">
               LATENCY: &lt;5ms (PRECISION LOOKAHEAD)
             </span>
-            <span className="hidden sm:inline">|</span>
-            <span className="text-fuchsia-400">
+            <span className="hidden sm:inline text-[#3a2d24]">|</span>
+            <span className="text-[#e8cca7]">
               SCALE: {currentPreset.rootNote} {currentPreset.scale.replace('_', ' ').toUpperCase()}
             </span>
           </div>
 
           <div className="flex items-center gap-3">
-            <span className="text-slate-400">
-              Press <kbd className="px-1.5 py-0.5 bg-slate-900 rounded border border-slate-800 text-slate-300">Space</kbd> to Play
+            <span className="text-[#9e8c80]">
+              Press <kbd className="px-1.5 py-0.5 bg-[#201915] rounded border border-[#382d24] text-[#ede0d4]">Space</kbd> to Play
             </span>
-            <span>•</span>
+            <span className="text-[#3a2d24]">•</span>
             <button
               type="button"
               onClick={() => setHelpOpen(true)}
-              className="text-cyan-400 hover:underline"
+              className="text-[#d99b61] hover:text-[#e8cca7] transition-colors underline"
             >
               Shortcuts & Manual
             </button>

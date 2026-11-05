@@ -1,5 +1,6 @@
 import { Preset, ScaleMode, Step, Track } from '../types/synth';
-import { generateEuclideanRhythm, getScaleNotes, NOTE_NAMES } from './musicTheory';
+import { generateEuclideanRhythm, getScaleNotes } from './musicTheory';
+import { TRACK_COLORS } from '../data/presets';
 
 export function generateAlgorithmicTrack(genre: 'synthwave' | 'techno' | 'ambient' | 'chillhop' = 'synthwave'): Preset {
   const rootNotes = ['A', 'C', 'D', 'F', 'G'];
@@ -88,7 +89,7 @@ export function generateAlgorithmicTrack(genre: 'synthwave' | 'techno' | 'ambien
       id: 'kick',
       name: 'Kick Drum',
       type: 'kick',
-      color: '#ff0055',
+      color: TRACK_COLORS.kick,
       volume: 0.95,
       pan: 0,
       mute: false,
@@ -106,7 +107,7 @@ export function generateAlgorithmicTrack(genre: 'synthwave' | 'techno' | 'ambien
       id: 'snare',
       name: 'Snare / Clap',
       type: 'snare',
-      color: '#ff7700',
+      color: TRACK_COLORS.snare,
       volume: 0.9,
       pan: 0,
       mute: false,
@@ -124,7 +125,7 @@ export function generateAlgorithmicTrack(genre: 'synthwave' | 'techno' | 'ambien
       id: 'hihat',
       name: 'Hi-Hat',
       type: 'hihat',
-      color: '#ffea00',
+      color: TRACK_COLORS.hihat,
       volume: 0.75,
       pan: -0.1,
       mute: false,
@@ -140,9 +141,9 @@ export function generateAlgorithmicTrack(genre: 'synthwave' | 'techno' | 'ambien
     },
     {
       id: 'zap',
-      name: 'Cyber Perc',
+      name: 'Warm Perc',
       type: 'zap',
-      color: '#00f0ff',
+      color: TRACK_COLORS.zap,
       volume: 0.7,
       pan: 0.2,
       mute: false,
@@ -158,9 +159,9 @@ export function generateAlgorithmicTrack(genre: 'synthwave' | 'techno' | 'ambien
     },
     {
       id: 'bass',
-      name: 'Acid Bassline',
+      name: 'Mocha Bassline',
       type: 'bass',
-      color: '#00ff66',
+      color: TRACK_COLORS.bass,
       volume: 0.9,
       pan: 0,
       mute: false,
@@ -169,9 +170,9 @@ export function generateAlgorithmicTrack(genre: 'synthwave' | 'techno' | 'ambien
     },
     {
       id: 'lead',
-      name: 'Generative Lead',
+      name: 'Warm Lead',
       type: 'lead',
-      color: '#bf00ff',
+      color: TRACK_COLORS.lead,
       volume: 0.85,
       pan: 0.1,
       mute: false,
@@ -182,7 +183,7 @@ export function generateAlgorithmicTrack(genre: 'synthwave' | 'techno' | 'ambien
       id: 'pad',
       name: 'Atmosphere Pad',
       type: 'pad',
-      color: '#00ffa6',
+      color: TRACK_COLORS.pad,
       volume: 0.7,
       pan: -0.1,
       mute: false,
@@ -248,3 +249,4 @@ export function generateAlgorithmicTrack(genre: 'synthwave' | 'techno' | 'ambien
     },
   };
 }
+

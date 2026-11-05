@@ -136,3 +136,4 @@ export class AcidSynth {
     this.ampGain.gain.value = 0;
   }
 }
+

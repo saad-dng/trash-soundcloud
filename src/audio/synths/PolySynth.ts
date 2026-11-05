@@ -227,3 +227,4 @@ export class PolySynth {
     this.noteOff(voiceId, time + gateDuration);
   }
 }
+

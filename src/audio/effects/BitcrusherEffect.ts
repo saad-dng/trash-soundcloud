@@ -65,3 +65,4 @@ export class BitcrusherEffect {
     this.wetGain.gain.setTargetAtTime(mix, time, 0.02);
   }
 }
+

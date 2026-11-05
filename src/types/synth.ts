@@ -155,12 +155,13 @@ export interface Preset {
   fxParams: FXParams;
 }
 
-export type VisualizerMode = 'cyber_oscilloscope' | 'radial_spectrum' | 'particle_warp' | 'matrix_waterfall';
+export type VisualizerMode = 'warm_oscilloscope' | 'latte_ripples' | 'cozy_dust' | 'ambient_bars';
 
 export interface VisualizerSettings {
   mode: VisualizerMode;
-  colorScheme: 'neon_cyan' | 'cyber_magenta' | 'amber_crt' | 'matrix_green' | 'solar_fire';
+  colorScheme: 'warm_caramel' | 'soft_latte' | 'dark_mocha';
   sensitivity: number;
   bloom: boolean;
   trail: boolean;
 }
+

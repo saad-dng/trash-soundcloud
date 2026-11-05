@@ -21,7 +21,7 @@ export const Knob: React.FC<KnobProps> = ({
   max,
   step = 1,
   unit = '',
-  color = '#00f0ff',
+  color = '#d99b61',
   defaultValue,
   size = 54,
   onChange,
@@ -140,7 +140,7 @@ export const Knob: React.FC<KnobProps> = ({
         onDoubleClick={handleDoubleClick}
         onWheel={handleWheel}
         onKeyDown={handleKeyDown}
-        className="relative cursor-ns-resize focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 rounded-full"
+        className="relative cursor-ns-resize focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d99b61] rounded-full"
         style={{ width: size, height: size }}
       >
         <svg width={size} height={size} className="overflow-visible">
@@ -150,7 +150,7 @@ export const Knob: React.FC<KnobProps> = ({
             cy={cy}
             r={radius}
             fill="none"
-            stroke="rgba(255, 255, 255, 0.1)"
+            stroke="rgba(232, 204, 167, 0.14)"
             strokeWidth="3.5"
             strokeDasharray={`${radius * 1.5 * Math.PI} ${radius * 2 * Math.PI}`}
             strokeDashoffset={-radius * 0.35}
@@ -166,7 +166,7 @@ export const Knob: React.FC<KnobProps> = ({
               strokeWidth="3.5"
               strokeLinecap="round"
               style={{
-                filter: isDragging ? `drop-shadow(0 0 6px ${color})` : `drop-shadow(0 0 3px ${color}80)`,
+                filter: isDragging ? `drop-shadow(0 0 4px ${color})` : undefined,
               }}
             />
           )}
@@ -176,8 +176,8 @@ export const Knob: React.FC<KnobProps> = ({
             cx={cx}
             cy={cy}
             r={radius * 0.76}
-            fill="#111827"
-            stroke={isDragging ? color : '#374151'}
+            fill="#231c17"
+            stroke={isDragging ? color : '#3d3229'}
             strokeWidth="1.5"
             className="transition-colors"
           />
@@ -196,12 +196,13 @@ export const Knob: React.FC<KnobProps> = ({
       </div>
 
       {/* Label and Value */}
-      <span className="text-[10px] font-mono uppercase tracking-wider text-slate-400 mt-1 truncate max-w-[64px] text-center">
+      <span className="text-[10px] font-mono uppercase tracking-wider text-[#9e8c7c] mt-1 truncate max-w-[64px] text-center">
         {label}
       </span>
-      <span className="text-[10px] font-mono font-semibold text-slate-200">
+      <span className="text-[10px] font-mono font-semibold text-[#f4ece4]">
         {displayVal}
       </span>
     </div>
   );
 };
+

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { audioEngine } from '../../audio/AudioEngine';
 import { ScaleMode } from '../../types/synth';
 import { NOTE_NAMES, getScaleNotes } from '../../utils/musicTheory';
-import { Keyboard as KeyboardIcon, Music, ShieldCheck } from 'lucide-react';
+import { Keyboard as KeyboardIcon, ShieldCheck } from 'lucide-react';
 
 interface VirtualKeyboardProps {
   rootNote: string;
@@ -87,7 +87,6 @@ export const VirtualKeyboard: React.FC<VirtualKeyboardProps> = ({ rootNote, scal
   // Computer keyboard listener
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Don't trigger if user is typing in an input
       if (['INPUT', 'SELECT', 'TEXTAREA'].includes((e.target as HTMLElement).tagName)) return;
       if (e.repeat) return;
 
@@ -102,7 +101,6 @@ export const VirtualKeyboard: React.FC<VirtualKeyboardProps> = ({ rootNote, scal
         targetNote = `${mapped}${baseOctave}`;
       }
 
-      // Check scale lock
       if (scaleLock && !scaleNotes.includes(targetNote)) return;
 
       playNote(targetNote);
@@ -132,13 +130,13 @@ export const VirtualKeyboard: React.FC<VirtualKeyboardProps> = ({ rootNote, scal
   }, [baseOctave, scaleLock, scaleNotes]);
 
   return (
-    <div className="w-full bg-slate-950/80 rounded-2xl border border-slate-800/80 p-4 shadow-xl backdrop-blur-md">
+    <div className="w-full bg-[#1b1511] rounded-2xl border border-[#2e241d] p-4 shadow-sm">
       {/* Keyboard Header */}
-      <div className="flex flex-wrap items-center justify-between border-b border-slate-800 pb-2 mb-3 gap-2">
+      <div className="flex flex-wrap items-center justify-between border-b border-[#2e241d] pb-2 mb-3 gap-2">
         <div className="flex items-center gap-2">
-          <KeyboardIcon className="w-4 h-4 text-cyan-400" />
-          <h2 className="text-sm font-mono font-bold tracking-wider text-slate-200 uppercase">
-            Interactive Polyphonic Keyboard
+          <KeyboardIcon className="w-4 h-4 text-[#d99b61]" />
+          <h2 className="text-sm font-mono font-bold tracking-wider text-[#f4ece4] uppercase">
+            Polyphonic Piano Keyboard
           </h2>
         </div>
 
@@ -149,8 +147,8 @@ export const VirtualKeyboard: React.FC<VirtualKeyboardProps> = ({ rootNote, scal
             onClick={() => setScaleLock(!scaleLock)}
             className={`flex items-center gap-1 px-2.5 py-1 text-xs font-mono font-bold rounded-lg border transition-all ${
               scaleLock
-                ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/50 shadow-[0_0_10px_rgba(16,185,129,0.3)]'
-                : 'bg-slate-800 text-slate-400 border-slate-700'
+                ? 'bg-[#d99b61] text-[#14100e] border-[#d99b61] shadow-sm'
+                : 'bg-[#241c16] text-[#a89988] border-[#382d24]'
             }`}
             title="Lock keys to current musical scale so you never hit a wrong note"
           >
@@ -159,21 +157,21 @@ export const VirtualKeyboard: React.FC<VirtualKeyboardProps> = ({ rootNote, scal
           </button>
 
           {/* Octave Shift */}
-          <div className="flex items-center gap-1 bg-slate-900 border border-slate-800 rounded-lg p-0.5">
+          <div className="flex items-center gap-1 bg-[#201915] border border-[#332820] rounded-lg p-0.5">
             <button
               type="button"
               onClick={() => setBaseOctave(Math.max(1, baseOctave - 1))}
-              className="px-2 py-0.5 rounded text-xs font-mono text-slate-300 hover:bg-slate-800"
+              className="px-2 py-0.5 rounded text-xs font-mono text-[#a89988] hover:text-[#f4ece4]"
             >
               -1 Oct
             </button>
-            <span className="text-xs font-mono text-cyan-400 font-bold px-1.5">
+            <span className="text-xs font-mono text-[#e8cca7] font-bold px-1.5">
               C{baseOctave}
             </span>
             <button
               type="button"
               onClick={() => setBaseOctave(Math.min(5, baseOctave + 1))}
-              className="px-2 py-0.5 rounded text-xs font-mono text-slate-300 hover:bg-slate-800"
+              className="px-2 py-0.5 rounded text-xs font-mono text-[#a89988] hover:text-[#f4ece4]"
             >
               +1 Oct
             </button>
@@ -199,15 +197,14 @@ export const VirtualKeyboard: React.FC<VirtualKeyboardProps> = ({ rootNote, scal
                   disabled={scaleLock && !inScale}
                   className={`absolute z-10 w-7 md:w-8 h-20 md:h-22 rounded-b-md flex flex-col justify-end items-center pb-2 text-[10px] font-mono font-bold transition-all border ${
                     isActive
-                      ? 'bg-cyan-400 border-cyan-300 text-slate-950 shadow-[0_0_15px_rgba(0,240,255,0.9)]'
+                      ? 'bg-[#d99b61] border-[#c4874e] text-[#14100e] shadow-sm'
                       : inScale
-                      ? 'bg-slate-900 text-cyan-400 border-slate-700 hover:bg-slate-850 shadow-md'
+                      ? 'bg-[#241c16] text-[#e8cca7] border-[#382d24] hover:bg-[#2d231c]'
                       : scaleLock
-                      ? 'bg-slate-950 border-slate-900 text-slate-700 cursor-not-allowed opacity-30'
-                      : 'bg-slate-900 text-slate-500 border-slate-800'
+                      ? 'bg-[#19130f] border-[#221a14] text-[#42362e] cursor-not-allowed opacity-35'
+                      : 'bg-[#201915] text-[#8c7868] border-[#332820]'
                   }`}
                   style={{
-                    // Position black key between corresponding white keys
                     left: `${getBlackKeyOffset(k.note, baseOctave)}px`,
                   }}
                   title={`${k.note} (${k.keyLabel || ''})`}
@@ -227,16 +224,16 @@ export const VirtualKeyboard: React.FC<VirtualKeyboardProps> = ({ rootNote, scal
                 disabled={scaleLock && !inScale}
                 className={`w-10 md:w-11 h-full rounded-b-lg flex flex-col justify-end items-center pb-2 text-xs font-mono font-bold transition-all border ${
                   isActive
-                    ? 'bg-cyan-400 border-cyan-300 text-slate-950 shadow-[0_0_20px_rgba(0,240,255,0.9)]'
+                    ? 'bg-[#d99b61] border-[#c4874e] text-[#14100e] shadow-sm'
                     : inScale
-                    ? 'bg-slate-800/90 text-cyan-200 border-slate-700 hover:bg-slate-700/80 shadow-md'
+                    ? 'bg-[#ede0d4] text-[#241c16] border-[#d8c7b4] hover:bg-[#f5ece1] shadow-sm'
                     : scaleLock
-                    ? 'bg-slate-950/60 border-slate-900 text-slate-700 cursor-not-allowed opacity-40'
-                    : 'bg-slate-900 text-slate-400 border-slate-800 hover:bg-slate-800'
+                    ? 'bg-[#201915] border-[#2b221b] text-[#59493e] cursor-not-allowed opacity-40'
+                    : 'bg-[#2c231c] text-[#a89988] border-[#382d24]'
                 }`}
                 title={`${k.note} (${k.keyLabel || ''})`}
               >
-                <span className="text-[9px] text-slate-400 font-normal leading-none">
+                <span className="text-[9px] text-[#6e5d50] font-normal leading-none">
                   {k.keyLabel}
                 </span>
                 <span className="text-[10px] leading-tight font-extrabold">{k.note}</span>

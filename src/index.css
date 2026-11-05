@@ -3,8 +3,14 @@
 @layer base {
   :root {
     color-scheme: dark;
-    --background: #030712;
-    --foreground: #f3f4f6;
+    --background: #14100e;
+    --foreground: #f4ece4;
+    --card: #1e1915;
+    --card-surface: #27201a;
+    --border: #382e26;
+    --accent-primary: #d99b61; /* Warm Caramel / Amber */
+    --accent-secondary: #e8cca7; /* Soft Cream Latte */
+    --accent-muted: #8c7868; /* Warm Roasted Hazelnut */
   }
 
   body {
@@ -16,9 +22,9 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  /* Accessible focus indicators adhering to modern accessibility guidelines */
+  /* Accessible focus indicators in warm caramel */
   :where(a:any-link, button, [role="button"], [role="slider"]):focus-visible {
-    outline: 2px solid #00f0ff;
+    outline: 2px solid #d99b61;
     outline-offset: 2px;
   }
 }
@@ -28,23 +34,23 @@
   grid-template-columns: repeat(16, minmax(0, 1fr));
 }
 
-/* Custom Scrollbars */
+/* Cozy Warm Scrollbars */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #030712;
+  background: #14100e;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1e293b;
+  background: #2b231d;
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #00f0ff80;
+  background: #473a30;
 }
 
 /* Visually Hidden Utility for Screen Readers */
@@ -58,18 +64,4 @@
   padding: 0 !important;
   border: 0 !important;
   white-space: nowrap !important;
-}
-
-/* CRT Scanline Glow Animation */
-@keyframes scanline {
-  0% {
-    transform: translateY(-100%);
-  }
-  100% {
-    transform: translateY(1000%);
-  }
-}
-
-.animate-scanline {
-  animation: scanline 8s linear infinite;
 }

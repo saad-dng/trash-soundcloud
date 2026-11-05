@@ -1,14 +1,10 @@
 import React, { useState } from 'react';
-import { InstrumentType, Step, Track } from '../../types/synth';
-import { Knob } from '../Controls/Knob';
+import { Step, Track } from '../../types/synth';
 import { NOTE_NAMES, generateEuclideanRhythm } from '../../utils/musicTheory';
 import {
   Dice5,
-  Edit3,
   Sliders,
   Trash2,
-  Volume2,
-  VolumeX,
   Wand,
 } from 'lucide-react';
 
@@ -115,23 +111,23 @@ export const SequencerGrid: React.FC<SequencerGridProps> = ({
   };
 
   return (
-    <div className="w-full bg-slate-950/80 rounded-2xl border border-slate-800/80 p-4 shadow-xl backdrop-blur-md">
+    <div className="w-full bg-[#1b1511] rounded-2xl border border-[#2e241d] p-4 shadow-sm">
       {/* Sequencer Header Bar */}
-      <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+      <div className="flex items-center justify-between pb-3 border-b border-[#2e241d]">
         <div className="flex items-center gap-2">
-          <Sliders className="w-4 h-4 text-cyan-400" />
-          <h2 className="text-sm font-mono font-bold tracking-wider text-slate-200 uppercase">
+          <Sliders className="w-4 h-4 text-[#d99b61]" />
+          <h2 className="text-sm font-mono font-bold tracking-wider text-[#f4ece4] uppercase">
             16-Step Multitrack Sequencer
           </h2>
         </div>
-        <div className="text-xs font-mono text-slate-400">
-          Tip: Click step to toggle • Right-click to edit pitch & velocity
+        <div className="text-xs font-mono text-[#a89988]">
+          Click step to toggle • Right-click to edit note & velocity
         </div>
       </div>
 
       {/* Step Numbers Playhead Indicator Bar */}
       <div className="flex items-center mt-3 mb-2">
-        <div className="w-52 shrink-0 hidden md:block text-[10px] font-mono uppercase tracking-wider text-slate-400 pl-2">
+        <div className="w-52 shrink-0 hidden md:block text-[10px] font-mono uppercase tracking-wider text-[#a89988] pl-2">
           Track Info
         </div>
         <div className="flex-1 grid grid-cols-16 gap-1 md:gap-1.5">
@@ -141,12 +137,12 @@ export const SequencerGrid: React.FC<SequencerGridProps> = ({
             return (
               <div
                 key={i}
-                className={`text-center py-1 rounded text-[10px] font-mono font-bold transition-all ${
+                className={`text-center py-1 rounded-md text-[10px] font-mono font-bold transition-all ${
                   isCurrent
-                    ? 'bg-cyan-400 text-slate-950 shadow-[0_0_12px_rgba(0,240,255,0.8)] scale-105'
+                    ? 'bg-[#d99b61] text-[#14100e] shadow-sm scale-105'
                     : isBeatStart
-                    ? 'bg-slate-800/90 text-cyan-300'
-                    : 'bg-slate-900/60 text-slate-400'
+                    ? 'bg-[#292019] text-[#e8cca7]'
+                    : 'bg-[#201915] text-[#8c7868]'
                 }`}
               >
                 {i + 1}
@@ -164,18 +160,18 @@ export const SequencerGrid: React.FC<SequencerGridProps> = ({
               key={track.id}
               className={`flex flex-col md:flex-row items-stretch md:items-center gap-2 p-2 rounded-xl border transition-all ${
                 track.mute
-                  ? 'bg-slate-950/40 border-slate-900 opacity-50'
-                  : 'bg-slate-900/60 border-slate-800/80 hover:border-slate-700/80'
+                  ? 'bg-[#18120e]/60 border-[#241c16] opacity-40'
+                  : 'bg-[#201915] border-[#2e251e] hover:border-[#3d3227]'
               }`}
             >
               {/* Track Left Info Column */}
               <div className="w-full md:w-52 shrink-0 flex items-center justify-between pr-2">
                 <div className="flex items-center gap-2 truncate">
                   <span
-                    className="w-2.5 h-2.5 rounded-full shrink-0 shadow-[0_0_8px_currentColor]"
-                    style={{ backgroundColor: track.color, color: track.color }}
+                    className="w-2.5 h-2.5 rounded-full shrink-0"
+                    style={{ backgroundColor: track.color }}
                   />
-                  <span className="text-xs font-mono font-bold text-slate-200 truncate">
+                  <span className="text-xs font-mono font-bold text-[#f4ece4] truncate">
                     {track.name}
                   </span>
                 </div>
@@ -187,8 +183,8 @@ export const SequencerGrid: React.FC<SequencerGridProps> = ({
                     onClick={() => handleToggleMute(trackIdx)}
                     className={`px-1.5 py-0.5 rounded text-[10px] font-mono font-bold border transition-colors ${
                       track.mute
-                        ? 'bg-red-500/20 text-red-400 border-red-500/50'
-                        : 'bg-slate-800 text-slate-400 border-slate-700 hover:text-slate-200'
+                        ? 'bg-[#b85d43]/30 text-[#e8cca7] border-[#b85d43]'
+                        : 'bg-[#28201a] text-[#8c7868] border-[#382d24] hover:text-[#f4ece4]'
                     }`}
                     title="Mute Track"
                   >
@@ -200,8 +196,8 @@ export const SequencerGrid: React.FC<SequencerGridProps> = ({
                     onClick={() => handleToggleSolo(trackIdx)}
                     className={`px-1.5 py-0.5 rounded text-[10px] font-mono font-bold border transition-colors ${
                       track.solo
-                        ? 'bg-amber-500/30 text-amber-300 border-amber-500/60 shadow-[0_0_8px_rgba(245,158,11,0.4)]'
-                        : 'bg-slate-800 text-slate-400 border-slate-700 hover:text-slate-200'
+                        ? 'bg-[#d99b61]/25 text-[#e8cca7] border-[#d99b61]'
+                        : 'bg-[#28201a] text-[#8c7868] border-[#382d24] hover:text-[#f4ece4]'
                     }`}
                     title="Solo Track"
                   >
@@ -212,7 +208,7 @@ export const SequencerGrid: React.FC<SequencerGridProps> = ({
                   <button
                     type="button"
                     onClick={() => setEuclideanModalTrack(trackIdx)}
-                    className="p-1 rounded bg-slate-800 hover:bg-slate-700 text-cyan-400 border border-slate-700/60"
+                    className="p-1 rounded bg-[#28201a] hover:bg-[#332820] text-[#e8cca7] border border-[#382d24]"
                     title="Generate Euclidean Rhythm"
                   >
                     <Wand className="w-3 h-3" />
@@ -222,7 +218,7 @@ export const SequencerGrid: React.FC<SequencerGridProps> = ({
                   <button
                     type="button"
                     onClick={() => handleRandomizeTrack(trackIdx)}
-                    className="p-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700/60"
+                    className="p-1 rounded bg-[#28201a] hover:bg-[#332820] text-[#a89988] border border-[#382d24]"
                     title="Randomize Track"
                   >
                     <Dice5 className="w-3 h-3" />
@@ -232,7 +228,7 @@ export const SequencerGrid: React.FC<SequencerGridProps> = ({
                   <button
                     type="button"
                     onClick={() => handleClearTrack(trackIdx)}
-                    className="p-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-red-400 border border-slate-700/60"
+                    className="p-1 rounded bg-[#28201a] hover:bg-[#332820] text-[#8c7868] hover:text-[#b85d43] border border-[#382d24]"
                     title="Clear Track Steps"
                   >
                     <Trash2 className="w-3 h-3" />
@@ -257,19 +253,19 @@ export const SequencerGrid: React.FC<SequencerGridProps> = ({
                       }}
                       className={`relative h-11 md:h-12 rounded-lg flex flex-col items-center justify-between p-1 transition-all active:scale-95 border ${
                         step.active
-                          ? 'border-transparent text-slate-950 font-bold shadow-md'
+                          ? 'border-transparent text-[#14100e] font-bold shadow-sm'
                           : isBeatStart
-                          ? 'bg-slate-950/80 border-slate-700/60 hover:bg-slate-800/80 text-slate-400'
-                          : 'bg-slate-950/40 border-slate-800/40 hover:bg-slate-800/60 text-slate-500'
+                          ? 'bg-[#18120e] border-[#382d24] hover:bg-[#251d17] text-[#a89988]'
+                          : 'bg-[#18120e]/60 border-[#281f18] hover:bg-[#221a14] text-[#6e5d50]'
                       } ${
                         isCurrent
-                          ? 'ring-2 ring-cyan-300 ring-offset-1 ring-offset-slate-950 scale-105'
+                          ? 'ring-2 ring-[#e8cca7] ring-offset-1 ring-offset-[#1b1511] scale-105'
                           : ''
                       }`}
                       style={{
                         backgroundColor: step.active ? track.color : undefined,
                         boxShadow: step.active
-                          ? `0 0 14px ${track.color}80, inset 0 1px 1px rgba(255,255,255,0.4)`
+                          ? '0 1px 3px rgba(0,0,0,0.3), inset 0 1px 1px rgba(255,255,255,0.25)'
                           : undefined,
                       }}
                       title={`${track.name} Step ${stepIdx + 1} (${step.note}) - Click to toggle, right-click to edit`}
@@ -277,7 +273,7 @@ export const SequencerGrid: React.FC<SequencerGridProps> = ({
                       {/* Note name display for tonal synths */}
                       <span
                         className={`text-[9px] font-mono leading-none truncate w-full text-center ${
-                          step.active ? 'text-slate-950 font-extrabold' : 'opacity-40'
+                          step.active ? 'text-[#14100e] font-extrabold' : 'opacity-40'
                         }`}
                       >
                         {track.type === 'bass' || track.type === 'lead' || track.type === 'pad'
@@ -289,7 +285,7 @@ export const SequencerGrid: React.FC<SequencerGridProps> = ({
                       <div className="w-full flex items-center justify-center gap-0.5 h-1">
                         {step.active && (
                           <div
-                            className="h-1 rounded-full bg-slate-950/70"
+                            className="h-1 rounded-full bg-[#14100e]/70"
                             style={{ width: `${Math.round(step.velocity * 100)}%` }}
                           />
                         )}
@@ -298,12 +294,12 @@ export const SequencerGrid: React.FC<SequencerGridProps> = ({
                       {/* Slide or Accent badge */}
                       <div className="flex items-center gap-0.5">
                         {step.slide && (
-                          <span className="text-[7px] font-mono leading-none px-0.5 bg-slate-950/60 text-white rounded">
+                          <span className="text-[7px] font-mono leading-none px-0.5 bg-[#14100e]/60 text-white rounded">
                             ~
                           </span>
                         )}
                         {step.accent && (
-                          <span className="text-[7px] font-mono leading-none px-0.5 bg-slate-950/60 text-white rounded">
+                          <span className="text-[7px] font-mono leading-none px-0.5 bg-[#14100e]/60 text-white rounded">
                             !
                           </span>
                         )}
@@ -319,17 +315,17 @@ export const SequencerGrid: React.FC<SequencerGridProps> = ({
 
       {/* Step Detail Edit Modal */}
       {editingStep && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4">
-          <div className="bg-slate-900 border border-cyan-500/40 rounded-2xl p-5 max-w-sm w-full shadow-2xl space-y-4">
-            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-              <h3 className="text-sm font-mono font-bold text-cyan-300">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-sm p-4">
+          <div className="bg-[#201915] border border-[#382d24] rounded-2xl p-5 max-w-sm w-full shadow-2xl space-y-4">
+            <div className="flex items-center justify-between border-b border-[#2e241d] pb-3">
+              <h3 className="text-sm font-mono font-bold text-[#e8cca7]">
                 Edit Step {editingStep.stepIndex + 1} (
                 {tracks[editingStep.trackIndex].name})
               </h3>
               <button
                 type="button"
                 onClick={() => setEditingStep(null)}
-                className="text-slate-400 hover:text-white font-mono text-sm"
+                className="text-[#a89988] hover:text-white font-mono text-sm"
               >
                 ✕
               </button>
@@ -337,7 +333,7 @@ export const SequencerGrid: React.FC<SequencerGridProps> = ({
 
             {/* Note Selector */}
             <div>
-              <label className="text-xs font-mono text-slate-300 block mb-1">
+              <label className="text-xs font-mono text-[#a89988] block mb-1">
                 Pitch / Note
               </label>
               <div className="grid grid-cols-6 gap-1">
@@ -354,10 +350,10 @@ export const SequencerGrid: React.FC<SequencerGridProps> = ({
                           step: { ...editingStep.step, note: `${n}${curOctave}` },
                         })
                       }
-                      className={`text-xs font-mono py-1 rounded border ${
+                      className={`text-xs font-mono py-1 rounded-md border ${
                         curNote === n
-                          ? 'bg-cyan-500 text-slate-950 border-cyan-400 font-bold'
-                          : 'bg-slate-800 text-slate-300 border-slate-700 hover:bg-slate-700'
+                          ? 'bg-[#d99b61] text-[#14100e] border-[#d99b61] font-bold'
+                          : 'bg-[#29201a] text-[#f4ece4] border-[#382d24] hover:bg-[#332820]'
                       }`}
                     >
                       {n}
@@ -369,7 +365,7 @@ export const SequencerGrid: React.FC<SequencerGridProps> = ({
 
             {/* Octave selector */}
             <div className="flex items-center justify-between">
-              <span className="text-xs font-mono text-slate-300">Octave</span>
+              <span className="text-xs font-mono text-[#a89988]">Octave</span>
               <div className="flex gap-1">
                 {[1, 2, 3, 4, 5].map((oct) => {
                   const noteBase = editingStep.step.note.replace(/\d+/, '');
@@ -387,10 +383,10 @@ export const SequencerGrid: React.FC<SequencerGridProps> = ({
                           },
                         })
                       }
-                      className={`w-7 h-7 rounded text-xs font-mono border ${
+                      className={`w-7 h-7 rounded-md text-xs font-mono border ${
                         editingStep.step.octave === oct
-                          ? 'bg-cyan-500 text-slate-950 border-cyan-400 font-bold'
-                          : 'bg-slate-800 text-slate-300 border-slate-700'
+                          ? 'bg-[#d99b61] text-[#14100e] border-[#d99b61] font-bold'
+                          : 'bg-[#29201a] text-[#f4ece4] border-[#382d24]'
                       }`}
                     >
                       {oct}
@@ -402,9 +398,9 @@ export const SequencerGrid: React.FC<SequencerGridProps> = ({
 
             {/* Velocity Slider */}
             <div>
-              <div className="flex justify-between text-xs font-mono text-slate-300 mb-1">
+              <div className="flex justify-between text-xs font-mono text-[#a89988] mb-1">
                 <span>Velocity</span>
-                <span>{Math.round(editingStep.step.velocity * 100)}%</span>
+                <span className="text-[#f4ece4]">{Math.round(editingStep.step.velocity * 100)}%</span>
               </div>
               <input
                 type="range"
@@ -421,15 +417,15 @@ export const SequencerGrid: React.FC<SequencerGridProps> = ({
                     },
                   })
                 }
-                className="w-full accent-cyan-400"
+                className="w-full accent-[#d99b61]"
               />
             </div>
 
             {/* Probability Slider */}
             <div>
-              <div className="flex justify-between text-xs font-mono text-slate-300 mb-1">
+              <div className="flex justify-between text-xs font-mono text-[#a89988] mb-1">
                 <span>Trigger Probability</span>
-                <span>{editingStep.step.probability}%</span>
+                <span className="text-[#f4ece4]">{editingStep.step.probability}%</span>
               </div>
               <input
                 type="range"
@@ -446,13 +442,13 @@ export const SequencerGrid: React.FC<SequencerGridProps> = ({
                     },
                   })
                 }
-                className="w-full accent-cyan-400"
+                className="w-full accent-[#d99b61]"
               />
             </div>
 
             {/* Slide & Accent Toggles for 303 */}
             <div className="flex items-center gap-3 pt-1">
-              <label className="flex items-center gap-2 text-xs font-mono text-slate-300 cursor-pointer">
+              <label className="flex items-center gap-2 text-xs font-mono text-[#a89988] cursor-pointer">
                 <input
                   type="checkbox"
                   checked={editingStep.step.slide || false}
@@ -462,12 +458,12 @@ export const SequencerGrid: React.FC<SequencerGridProps> = ({
                       step: { ...editingStep.step, slide: e.target.checked },
                     })
                   }
-                  className="rounded accent-cyan-400"
+                  className="rounded accent-[#d99b61]"
                 />
-                <span>Slide (Portamento)</span>
+                <span>Slide</span>
               </label>
 
-              <label className="flex items-center gap-2 text-xs font-mono text-slate-300 cursor-pointer">
+              <label className="flex items-center gap-2 text-xs font-mono text-[#a89988] cursor-pointer">
                 <input
                   type="checkbox"
                   checked={editingStep.step.accent || false}
@@ -477,24 +473,24 @@ export const SequencerGrid: React.FC<SequencerGridProps> = ({
                       step: { ...editingStep.step, accent: e.target.checked },
                     })
                   }
-                  className="rounded accent-cyan-400"
+                  className="rounded accent-[#d99b61]"
                 />
                 <span>Accent</span>
               </label>
             </div>
 
-            <div className="flex justify-end gap-2 pt-2 border-t border-slate-800">
+            <div className="flex justify-end gap-2 pt-2 border-t border-[#2e241d]">
               <button
                 type="button"
                 onClick={() => setEditingStep(null)}
-                className="px-3 py-1.5 rounded-lg text-xs font-mono text-slate-400 hover:text-white"
+                className="px-3 py-1.5 rounded-lg text-xs font-mono text-[#a89988] hover:text-white"
               >
                 Cancel
               </button>
               <button
                 type="button"
                 onClick={() => handleSaveStep(editingStep.step)}
-                className="px-4 py-1.5 rounded-lg text-xs font-mono font-bold bg-cyan-500 text-slate-950 hover:bg-cyan-400 shadow-md"
+                className="px-4 py-1.5 rounded-lg text-xs font-mono font-bold bg-[#d99b61] text-[#14100e] hover:bg-[#e2aa75] shadow-sm"
               >
                 Save Step
               </button>
@@ -505,19 +501,19 @@ export const SequencerGrid: React.FC<SequencerGridProps> = ({
 
       {/* Euclidean Rhythm Generator Modal */}
       {euclideanModalTrack !== null && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4">
-          <div className="bg-slate-900 border border-cyan-500/40 rounded-2xl p-5 max-w-sm w-full shadow-2xl space-y-4">
-            <h3 className="text-sm font-mono font-bold text-cyan-300">
-              Euclidean Rhythm Generator ({tracks[euclideanModalTrack].name})
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-sm p-4">
+          <div className="bg-[#201915] border border-[#382d24] rounded-2xl p-5 max-w-sm w-full shadow-2xl space-y-4">
+            <h3 className="text-sm font-mono font-bold text-[#e8cca7]">
+              Euclidean Rhythm ({tracks[euclideanModalTrack].name})
             </h3>
-            <p className="text-xs font-mono text-slate-400">
+            <p className="text-xs font-mono text-[#a89988]">
               Distribute rhythmic pulses evenly across 16 steps using Euclidean geometry.
             </p>
 
             <div>
-              <div className="flex justify-between text-xs font-mono text-slate-300 mb-1">
+              <div className="flex justify-between text-xs font-mono text-[#a89988] mb-1">
                 <span>Pulses</span>
-                <span>{euclidPulses} of 16 steps</span>
+                <span className="text-[#f4ece4]">{euclidPulses} of 16 steps</span>
               </div>
               <input
                 type="range"
@@ -525,17 +521,17 @@ export const SequencerGrid: React.FC<SequencerGridProps> = ({
                 max="16"
                 value={euclidPulses}
                 onChange={(e) => setEuclidPulses(parseInt(e.target.value, 10))}
-                className="w-full accent-cyan-400"
+                className="w-full accent-[#d99b61]"
               />
             </div>
 
             {/* Pattern Preview */}
-            <div className="grid grid-cols-16 gap-1 p-2 bg-slate-950 rounded-lg">
+            <div className="grid grid-cols-16 gap-1 p-2 bg-[#16110f] rounded-lg border border-[#2e241d]">
               {generateEuclideanRhythm(euclidPulses, 16).map((active, i) => (
                 <div
                   key={i}
                   className={`h-6 rounded flex items-center justify-center text-[9px] font-mono font-bold ${
-                    active ? 'bg-cyan-400 text-slate-950' : 'bg-slate-800 text-slate-600'
+                    active ? 'bg-[#d99b61] text-[#14100e]' : 'bg-[#241c16] text-[#6e5d50]'
                   }`}
                 >
                   {active ? '●' : '·'}
@@ -543,18 +539,18 @@ export const SequencerGrid: React.FC<SequencerGridProps> = ({
               ))}
             </div>
 
-            <div className="flex justify-end gap-2 pt-2 border-t border-slate-800">
+            <div className="flex justify-end gap-2 pt-2 border-t border-[#2e241d]">
               <button
                 type="button"
                 onClick={() => setEuclideanModalTrack(null)}
-                className="px-3 py-1.5 rounded-lg text-xs font-mono text-slate-400 hover:text-white"
+                className="px-3 py-1.5 rounded-lg text-xs font-mono text-[#a89988] hover:text-white"
               >
                 Cancel
               </button>
               <button
                 type="button"
                 onClick={handleApplyEuclid}
-                className="px-4 py-1.5 rounded-lg text-xs font-mono font-bold bg-cyan-500 text-slate-950 hover:bg-cyan-400 shadow-md"
+                className="px-4 py-1.5 rounded-lg text-xs font-mono font-bold bg-[#d99b61] text-[#14100e] hover:bg-[#e2aa75] shadow-sm"
               >
                 Apply Rhythm
               </button>

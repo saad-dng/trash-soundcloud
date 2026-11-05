@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { audioEngine } from '../../audio/AudioEngine';
-import { Drum, Radio, Sparkles } from 'lucide-react';
+import { Drum } from 'lucide-react';
+import { TRACK_COLORS } from '../../data/presets';
 
 interface PadDef {
   id: string;
@@ -11,14 +12,14 @@ interface PadDef {
 }
 
 const DRUM_PADS: PadDef[] = [
-  { id: 'kick', name: '808 KICK', soundType: 'kick', shortcut: '1', color: '#ff0055' },
-  { id: 'snare', name: 'CRUNCH SNARE', soundType: 'snare', shortcut: '2', color: '#ff7700' },
-  { id: 'hihat', name: 'CLOSED HAT', soundType: 'hihat', shortcut: '3', color: '#ffea00' },
-  { id: 'openhat', name: 'OPEN HAT', soundType: 'openhat', shortcut: '4', color: '#ffc400' },
-  { id: 'clap', name: 'HAND CLAP', soundType: 'clap', shortcut: 'Q', color: '#00ffa6' },
-  { id: 'zap', name: 'CYBER ZAP', soundType: 'zap', shortcut: 'W', color: '#00f0ff' },
-  { id: 'tom1', name: 'HI TOM', soundType: 'tom', shortcut: 'E', color: '#bf00ff' },
-  { id: 'tom2', name: 'LO TOM', soundType: 'tom', shortcut: 'R', color: '#7b2cbf' },
+  { id: 'kick', name: 'WARM KICK', soundType: 'kick', shortcut: '1', color: TRACK_COLORS.kick },
+  { id: 'snare', name: 'MELLOW SNARE', soundType: 'snare', shortcut: '2', color: TRACK_COLORS.snare },
+  { id: 'hihat', name: 'CLOSED HAT', soundType: 'hihat', shortcut: '3', color: TRACK_COLORS.hihat },
+  { id: 'openhat', name: 'OPEN HAT', soundType: 'openhat', shortcut: '4', color: TRACK_COLORS.openhat },
+  { id: 'clap', name: 'HAND CLAP', soundType: 'clap', shortcut: 'Q', color: TRACK_COLORS.zap },
+  { id: 'zap', name: 'WARM CHIME', soundType: 'zap', shortcut: 'W', color: TRACK_COLORS.bass },
+  { id: 'tom1', name: 'HI TOM', soundType: 'tom', shortcut: 'E', color: TRACK_COLORS.lead },
+  { id: 'tom2', name: 'LO TOM', soundType: 'tom', shortcut: 'R', color: TRACK_COLORS.pad },
 ];
 
 export const DrumPads: React.FC = () => {
@@ -49,18 +50,18 @@ export const DrumPads: React.FC = () => {
   }, [padVelocity]);
 
   return (
-    <div className="w-full bg-slate-950/80 rounded-2xl border border-slate-800/80 p-4 shadow-xl backdrop-blur-md">
+    <div className="w-full bg-[#1b1511] rounded-2xl border border-[#2e241d] p-4 shadow-sm">
       {/* Title */}
-      <div className="flex items-center justify-between border-b border-slate-800 pb-2 mb-3">
+      <div className="flex items-center justify-between border-b border-[#2e241d] pb-2 mb-3">
         <div className="flex items-center gap-2">
-          <Drum className="w-4 h-4 text-cyan-400" />
-          <h2 className="text-sm font-mono font-bold tracking-wider text-slate-200 uppercase">
+          <Drum className="w-4 h-4 text-[#d99b61]" />
+          <h2 className="text-sm font-mono font-bold tracking-wider text-[#f4ece4] uppercase">
             MPC Beat Launchpads
           </h2>
         </div>
 
         <div className="flex items-center gap-2">
-          <span className="text-xs font-mono text-slate-400">Pad Velocity:</span>
+          <span className="text-xs font-mono text-[#a89988]">Velocity:</span>
           <input
             type="range"
             min="0.2"
@@ -68,9 +69,9 @@ export const DrumPads: React.FC = () => {
             step="0.05"
             value={padVelocity}
             onChange={(e) => setPadVelocity(parseFloat(e.target.value))}
-            className="w-24 accent-cyan-400"
+            className="w-24 accent-[#d99b61]"
           />
-          <span className="text-xs font-mono text-cyan-300 font-bold w-9 text-right">
+          <span className="text-xs font-mono text-[#e8cca7] font-bold w-9 text-right">
             {Math.round(padVelocity * 100)}%
           </span>
         </div>
@@ -85,14 +86,13 @@ export const DrumPads: React.FC = () => {
               key={pad.id}
               type="button"
               onPointerDown={() => triggerPad(pad)}
-              className={`h-20 rounded-xl flex flex-col items-center justify-between p-2.5 font-mono transition-all active:scale-90 border select-none ${
+              className={`h-20 rounded-xl flex flex-col items-center justify-between p-2.5 font-mono transition-all active:scale-95 border select-none ${
                 isActive
-                  ? 'border-transparent text-slate-950 scale-95 shadow-xl'
-                  : 'bg-slate-900/80 hover:bg-slate-800 text-slate-300 border-slate-800 hover:border-slate-700 shadow-md'
+                  ? 'border-transparent text-[#14100e] scale-95 shadow-sm'
+                  : 'bg-[#221a15] hover:bg-[#2b211a] text-[#e8cca7] border-[#332820] hover:border-[#47382d]'
               }`}
               style={{
                 backgroundColor: isActive ? pad.color : undefined,
-                boxShadow: isActive ? `0 0 20px ${pad.color}` : undefined,
               }}
               title={`Trigger ${pad.name} (Key: ${pad.shortcut})`}
             >
@@ -101,11 +101,11 @@ export const DrumPads: React.FC = () => {
                   className="w-2 h-2 rounded-full"
                   style={{ backgroundColor: pad.color }}
                 />
-                <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-slate-950/60 text-slate-300">
+                <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-[#16110e]/70 text-[#a89988]">
                   {pad.shortcut}
                 </span>
               </div>
-              <span className="text-[10px] font-extrabold text-center leading-tight truncate w-full">
+              <span className="text-[10px] font-bold text-center leading-tight truncate w-full">
                 {pad.name}
               </span>
             </button>
